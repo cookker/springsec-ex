@@ -1,0 +1,39 @@
+spring:
+  profiles:
+    active: local
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:mem:bankdb;MODE=MySQL;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
+        format_sql: true
+        use_sql_comments: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+    org.hibernate.type.descriptor.sql: trace
+    ms.me.springsec: debug
+    org.hibernate.sql: debug
+    org.springframework.web.client: debug
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug

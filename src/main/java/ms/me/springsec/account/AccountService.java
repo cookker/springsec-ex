@@ -25,12 +25,16 @@ public class AccountService implements UserDetailsService {
 
         Optional<Account> optionalAccount = accountRepository.findByUsername(username);
 
-        return optionalAccount.map(a -> User.builder()
-                                    .username(a.getUsername())
-                                    .password(a.getPassword())
-                                    .roles(a.getRole())
-                                    .build())
-                                .orElseThrow(() -> new UsernameNotFoundException(username));
+//        return optionalAccount.map(a -> User.builder()
+//                                    .username(a.getUsername())
+//                                    .password(a.getPassword())
+//                                    .roles(a.getRole())
+//                                    .build())
+//                                .orElseThrow(() -> new UsernameNotFoundException(username));
+
+        final Account account = optionalAccount.orElseThrow(() -> new UsernameNotFoundException(username));
+
+        return new UserAccount(account);
     }
 
     public Account createNew(Account account) {

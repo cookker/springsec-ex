@@ -1,9 +1,8 @@
 package ms.me.springsec.form;
 
 import lombok.RequiredArgsConstructor;
-import ms.me.springsec.account.AccountContext;
-import ms.me.springsec.account.AccountRepository;
-import ms.me.springsec.account.DashboardService;
+import ms.me.springsec.account.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +17,14 @@ public class SampleController {
     private final AccountRepository accountRepository;
 
     @GetMapping("/")
-    public String index(Model model, Principal principal){
-        if(principal == null){
+//    public String index(Model model, Principal principal){
+//    public String index(Model model, @AuthenticationPrincipal UserAccount userAccount){
+    public String index(Model model, @CurrentUser Account userAccount){
+
+        if(userAccount == null){
             model.addAttribute("message", "Hello");
         }else{
-            model.addAttribute("message", "Hello, " + principal.getName());
+            model.addAttribute("message", "Hello, " + userAccount.getUsername());
         }
         return "index";
     }
